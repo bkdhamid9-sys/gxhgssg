@@ -1,0 +1,6 @@
+{
+  "name": "Monopoly GO Dice Rewards Portal",
+  "description": "High-converting Monopoly GO dice rolls & rewards generator landing page with live claim notifications and verification locker.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
