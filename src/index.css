@@ -10,6 +10,64 @@
   }
 }
 
+/* Authentic Polygon Clip-Path from lmwo47.blogspot.com */
+.poly-container {
+  clip-path: polygon(
+    0% 0%, 33% 1.5%, 37% 3.5%, 38% 2%, 60% 2.8%, 63% 5%, 64% 3%, 100% 4.5%,
+    100% 28%, 97% 29%, 100% 35%, 100% 51%, 98% 51%, 100% 55%, 100% 70%, 97% 70%,
+    100% 76%, 100% 95%, 74% 96%, 70% 94%, 69% 96%, 33% 97.5%, 29% 96%, 28% 97.5%,
+    0 100%, 0 82%, 3% 76%, 0 76%, 0 53%, 2% 50%, 0 50%, 0 22%, 3.5% 19%, 0 14%
+  );
+}
+
+/* 3D Cartoon Arcade Button (Signature from lmwo47.blogspot.com) */
+.arcade-btn-yellow {
+  background: #facc15;
+  color: #0f172a;
+  border-bottom: 5px solid #ca8a04;
+  box-shadow: 0 10px 25px -5px rgba(250, 204, 21, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arcade-btn-yellow:hover {
+  background: #fde047;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -4px rgba(250, 204, 21, 0.5), 0 10px 12px -5px rgba(0, 0, 0, 0.35);
+}
+
+.arcade-btn-yellow:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+  box-shadow: 0 4px 12px -2px rgba(250, 204, 21, 0.4);
+}
+
+.arcade-btn-red {
+  background: #ef4444;
+  color: #ffffff;
+  border-bottom: 5px solid #b91c1c;
+  box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arcade-btn-red:hover {
+  background: #f87171;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -4px rgba(239, 68, 68, 0.5);
+}
+
+.arcade-btn-red:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+/* Cartoon Step Number Badge (Signature .sipo-s from lmwo47.blogspot.com) */
+.step-circle-badge {
+  background: #facc15;
+  color: #0f172a;
+  border-bottom: 4px solid #ca8a04;
+  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.4);
+}
+
 @keyframes pulseGlow {
   0%, 100% {
     box-shadow: 0 0 15px rgba(234, 179, 8, 0.25), 0 0 30px rgba(239, 68, 68, 0.2);

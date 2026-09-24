@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Language } from '../types';
+import { Language, GameMode } from '../types';
 import { translations } from '../translations';
-import { ChevronDown, Star, ShieldCheck, CheckCircle2 } from 'lucide-react';
-import { FreeFireDiamondIcon } from './Icons';
+import { ChevronDown, Star, CheckCircle2 } from 'lucide-react';
+import { MonopolyDiceIcon, FreeFireDiamondIcon } from './Icons';
 
 interface FaqAndProofProps {
   currentLang: Language;
+  gameMode?: GameMode;
 }
 
-export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
+export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang, gameMode = 'monopoly' }) => {
   const t = translations[currentLang];
   const isRtl = currentLang === 'ar';
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -19,12 +20,54 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
     { q: t.faqQ3, a: t.faqA3 },
   ];
 
-  const reviews = [
+  const monopolyReviews = [
+    {
+      name: currentLang === 'ar' ? 'كريم العمراني' : 'Karim Tycoon',
+      location: currentLang === 'ar' ? 'الدار البيضاء، المغرب 🇲🇦' : 'Casablanca, Morocco 🇲🇦',
+      rating: 5,
+      rewardText: currentLang === 'ar' ? '13,500 🎲 رولة نرد' : '13,500 🎲 Dice Rolls',
+      comment:
+        currentLang === 'ar'
+          ? 'والله العظيم أفضل موقع لمونوبولي جو! أدخلت اسم المستخدم وأكملت المهمة المطلوبة، فوصلتني 13,500 رولة نرد في أقل من 3 دقائق وتمكنت من الفوز بالفعالية الكبرى.'
+          : currentLang === 'fr'
+          ? 'Franchement incroyable ! J’ai mis mon pseudo, terminé la vérification et reçu 13 500 dés sur mon compte Monopoly Go.'
+          : 'Amazing service! Entered my Monopoly username, finished the task and 13,500 dice rolls credited within 3 minutes.',
+      time: currentLang === 'ar' ? 'منذ 8 دقائق' : '8m ago',
+    },
+    {
+      name: currentLang === 'ar' ? 'فهد القحطاني' : 'Fahad_KSA',
+      location: currentLang === 'ar' ? 'الرياض، السعودية 🇸🇦' : 'Riyadh, Saudi Arabia 🇸🇦',
+      rating: 5,
+      rewardText: currentLang === 'ar' ? '8,250 🎲 باقة الهاي رولر' : '8,250 🎲 High Roller',
+      comment:
+        currentLang === 'ar'
+          ? 'خدمة سريعة ومضمونة 100%! شحنت 8,250 نرد وجمعت كل الاستيكرات النادرة وفتحت الألبوم الذهبي بكل سهولة.'
+          : currentLang === 'fr'
+          ? 'Le pack 8 250 dés m’a permis de terminer tous mes albums de stickers sans rien payer !'
+          : 'Got the 8,250 dice roll pack! Finished my sticker albums instantly without any issues.',
+      time: currentLang === 'ar' ? 'منذ 18 دقيقة' : '18m ago',
+    },
+    {
+      name: currentLang === 'ar' ? 'أحمد المصري' : 'Ahmed_Cairo',
+      location: currentLang === 'ar' ? 'القاهرة، مصر 🇪🇬' : 'Cairo, Egypt 🇪🇬',
+      rating: 5,
+      rewardText: currentLang === 'ar' ? '13,500 🎲 باقة الهيمنة' : '13,500 🎲 Dominator',
+      comment:
+        currentLang === 'ar'
+          ? 'الموقع آمن تماماً لأنه لا يطلب كلمة مرور حسابك، فقط اسم المستخدم. أنصح كل من يلعب Monopoly GO باستخدامه.'
+          : currentLang === 'fr'
+          ? 'Totalement sécurisé car aucun mot de passe requis. Recommandé à tous les joueurs de Monopoly GO.'
+          : 'Completely secure since it only asks for the username, no passwords. Highly recommended!',
+      time: currentLang === 'ar' ? 'منذ 34 دقيقة' : '34m ago',
+    },
+  ];
+
+  const freefireReviews = [
     {
       name: currentLang === 'ar' ? 'أمين العمراني' : 'Amine El Amrani',
       location: currentLang === 'ar' ? 'الدار البيضاء، المغرب 🇲🇦' : 'Casablanca, Morocco 🇲🇦',
       rating: 5,
-      diamonds: currentLang === 'ar' ? '2,180 💎 جوهرة' : '2,180 💎 Diamonds',
+      rewardText: currentLang === 'ar' ? '2,180 💎 جوهرة فري فاير' : '2,180 💎 Diamonds',
       comment:
         currentLang === 'ar'
           ? 'خدمة ممتازة وسريعة للغاية! قمت بإدخال مُعرّف حسابي (UID) وأكملت المهمة المطلوبة، فوصلتني 2,180 جوهرة لحسابي في أقل من 3 دقائق.'
@@ -37,7 +80,7 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
       name: currentLang === 'ar' ? 'ياسين الجزائري' : 'Yassine FF Booyah',
       location: currentLang === 'ar' ? 'الجزائر العاصمة، الجزائر 🇩🇿' : 'Algiers, Algeria 🇩🇿',
       rating: 5,
-      diamonds: currentLang === 'ar' ? '5,600 💎 باقة VIP' : '5,600 💎 VIP Pack',
+      rewardText: currentLang === 'ar' ? '5,600 💎 باقة VIP' : '5,600 💎 VIP Pack',
       comment:
         currentLang === 'ar'
           ? 'أفضل موقع صادق لشحن جواهر فري فاير بدون منازع! شحنت باقة 5,600 جوهرة وفتحت الفاير باس وسكن الكوبرا فوراً، شكراً جزيلاً لكم.'
@@ -50,7 +93,7 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
       name: currentLang === 'ar' ? 'كريم التونسي' : 'Karim_Heroic',
       location: currentLang === 'ar' ? 'تونس العاصمة، تونس 🇹🇳' : 'Tunis, Tunisia 🇹🇳',
       rating: 5,
-      diamonds: currentLang === 'ar' ? '11,500 💎 باقة النخبة' : '11,500 💎 Elite',
+      rewardText: currentLang === 'ar' ? '11,500 💎 باقة النخبة' : '11,500 💎 Elite',
       comment:
         currentLang === 'ar'
           ? 'الموقع آمن وموثوق بنسبة 100% لأنه يطلب مُعرّف اللاعب فقط ولا يطلب كلمة المرور إطلاقاً. أنصح به جميع لاعبي فري فاير.'
@@ -60,6 +103,8 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
       time: currentLang === 'ar' ? 'منذ 42 دقيقة' : '42m ago',
     },
   ];
+
+  const activeReviews = gameMode === 'monopoly' ? monopolyReviews : freefireReviews;
 
   return (
     <section className="py-12 border-t border-slate-900 bg-slate-950/70">
@@ -75,16 +120,18 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
                 : 'PLAYER REVIEWS'}
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 font-heading">
-              {currentLang === 'ar'
+              {gameMode === 'monopoly'
+                ? currentLang === 'ar'
+                  ? 'تقييمات لاعبي Monopoly GO'
+                  : 'Monopoly GO Community Feedback'
+                : currentLang === 'ar'
                 ? 'تقييمات مجتمع Free Fire'
-                : currentLang === 'fr'
-                ? 'Retours des Joueurs Récents'
-                : 'Recent Player Feedback'}
+                : 'Free Fire Player Feedback'}
             </h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {reviews.map((rev, i) => (
+            {activeReviews.map((rev, i) => (
               <div
                 key={i}
                 className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col justify-between shadow-lg"
@@ -110,9 +157,13 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
                 </div>
 
                 <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
-                  <span className="text-cyan-400 font-bold flex items-center gap-1">
-                    <FreeFireDiamondIcon className="w-4 h-4" />
-                    {rev.diamonds}
+                  <span className="text-amber-400 font-bold flex items-center gap-1.5">
+                    {gameMode === 'monopoly' ? (
+                      <MonopolyDiceIcon className="w-4 h-4" />
+                    ) : (
+                      <FreeFireDiamondIcon className="w-4 h-4" />
+                    )}
+                    {rev.rewardText}
                   </span>
                   <span className="text-[10px] text-emerald-400 font-bold uppercase flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3" />
@@ -127,7 +178,7 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
         {/* FAQ Accordion */}
         <div id="faq" className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
-            <span className="text-xs uppercase tracking-wider text-cyan-400 font-bold">
+            <span className="text-xs uppercase tracking-wider text-amber-400 font-bold">
               FAQ
             </span>
             <h3 className="text-2xl sm:text-3xl font-black text-white mt-1 font-heading">
@@ -157,17 +208,13 @@ export const FaqAndProof: React.FC<FaqAndProofProps> = ({ currentLang }) => {
                     </span>
                     <ChevronDown
                       className={`w-5 h-5 text-slate-400 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-cyan-400' : ''
+                        isOpen ? 'rotate-180 text-amber-400' : ''
                       }`}
                     />
                   </button>
 
                   {isOpen && (
-                    <div
-                      className={`px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 bg-slate-950/50 ${
-                        isRtl ? 'text-right' : 'text-left'
-                      }`}
-                    >
+                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 mt-1">
                       {item.a}
                     </div>
                   )}

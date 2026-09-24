@@ -1,25 +1,28 @@
 export type Platform = 'android' | 'ios' | 'pc';
 
-export interface DiamondPackage {
+export type GameMode = 'monopoly' | 'freefire';
+
+export interface RewardBundle {
   id: string;
   name: string;
-  diamondCount: number;
+  count: number;
   bonusCount: number;
   popular?: boolean;
   bestValue?: boolean;
-  badge?: string;
-  colorScheme: 'cyan' | 'amber' | 'purple' | 'red';
+  colorScheme?: 'cyan' | 'amber' | 'purple' | 'red' | 'emerald';
 }
 
-// Backward compatibility alias if needed
-export type RewardPackage = DiamondPackage;
+// Backward compatibility aliases
+export type DiamondPackage = RewardBundle & { diamondCount: number };
+export type RewardPackage = RewardBundle;
 
 export interface LiveClaim {
   id: string;
   username: string;
   location: string;
   countryCode: string;
-  diamondsClaimed: number;
+  amountClaimed: number;
+  resourceType: 'dices' | 'diamonds';
   timeAgo: string;
   avatarSeed: string;
 }
