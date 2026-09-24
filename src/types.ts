@@ -1,26 +1,30 @@
-export type Platform = 'ios' | 'android' | 'pc';
+export type Platform = 'android' | 'ios' | 'pc';
 
-export interface RewardPackage {
+export interface DiamondPackage {
   id: string;
   name: string;
-  diceCount: number;
-  cashAmount: string;
-  badge?: string;
+  diamondCount: number;
+  bonusCount: number;
   popular?: boolean;
-  colorScheme: 'emerald' | 'amber' | 'purple';
+  bestValue?: boolean;
+  badge?: string;
+  colorScheme: 'cyan' | 'amber' | 'purple' | 'red';
 }
+
+// Backward compatibility alias if needed
+export type RewardPackage = DiamondPackage;
 
 export interface LiveClaim {
   id: string;
   username: string;
   location: string;
   countryCode: string;
-  diceClaimed: number;
+  diamondsClaimed: number;
   timeAgo: string;
   avatarSeed: string;
 }
 
-export type Language = 'en' | 'fr';
+export type Language = 'ar' | 'fr' | 'en';
 
 export interface CpaConfig {
   lockerUrl: string;

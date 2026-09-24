@@ -83,7 +83,9 @@ export const CpaConfigModal: React.FC<CpaConfigModalProps> = ({
             <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
               <Info className="w-3.5 h-3.5 text-amber-400 shrink-0" />
               <span>
-                {currentLang === 'fr'
+                {currentLang === 'ar'
+                  ? 'متوافق مع Trcefy و CPAGrip و CPABuild و OGAds و AdBlueMedia أو أي شبكة عروض CPA.'
+                  : currentLang === 'fr'
                   ? 'Compatible avec Trcefy, CPAGrip, CPABuild, OGAds ou toute offre CPA.'
                   : 'Works with Trcefy, CPAGrip, CPABuild, OGAds, AdBlueMedia or any CPA offer.'}
               </span>
@@ -92,7 +94,11 @@ export const CpaConfigModal: React.FC<CpaConfigModalProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              {currentLang === 'fr' ? 'Nom du réseau CPA (Optionnel) :' : 'CPA Network Name (Optional):'}
+              {currentLang === 'ar'
+                ? 'اسم شبكة CPA (اختياري):'
+                : currentLang === 'fr'
+                ? 'Nom du réseau CPA (Optionnel) :'
+                : 'CPA Network Name (Optional):'}
             </label>
             <input
               type="text"
@@ -111,7 +117,13 @@ export const CpaConfigModal: React.FC<CpaConfigModalProps> = ({
               className="py-2.5 px-3 rounded-xl border border-slate-700 hover:border-slate-600 text-slate-300 text-xs font-medium flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>{currentLang === 'fr' ? 'Tester le lien' : 'Test Link'}</span>
+              <span>
+                {currentLang === 'ar'
+                  ? 'تجربة الرابط'
+                  : currentLang === 'fr'
+                  ? 'Tester le lien'
+                  : 'Test Link'}
+              </span>
             </button>
 
             <button
@@ -121,7 +133,13 @@ export const CpaConfigModal: React.FC<CpaConfigModalProps> = ({
               {savedSuccess ? (
                 <>
                   <Check className="w-4 h-4 text-slate-950" />
-                  <span>{currentLang === 'fr' ? 'Enregistré avec succès !' : 'Saved!'}</span>
+                  <span>
+                    {currentLang === 'ar'
+                      ? 'تم الحفظ بنجاح!'
+                      : currentLang === 'fr'
+                      ? 'Enregistré avec succès !'
+                      : 'Saved!'}
+                  </span>
                 </>
               ) : (
                 <>

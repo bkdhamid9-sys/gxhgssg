@@ -1,167 +1,123 @@
 import React, { useState, useEffect } from 'react';
-import { Platform, RewardPackage, Language, CpaConfig } from './types';
+import { Language, CpaConfig } from './types';
 import { translations } from './translations';
 import { Navbar } from './components/Navbar';
-import { CompactSteps } from './components/CompactSteps';
-import { UserForm } from './components/UserForm';
-import { DirectClaimFlow } from './components/DirectClaimFlow';
-import { PackageSelector, packages } from './components/PackageSelector';
-import { ConsoleModal } from './components/ConsoleModal';
-import { CpaLockerModal } from './components/CpaLockerModal';
+import { FreeFireGeneratorFlow } from './components/FreeFireGeneratorFlow';
 import { LiveToasts } from './components/LiveToasts';
 import { CpaConfigModal } from './components/CpaConfigModal';
 import { FaqAndProof } from './components/FaqAndProof';
-import { RedDiceIcon, GoldDiceIcon, MonopolyCashIcon } from './components/Icons';
-import { ShieldCheck, Flame, Users, Sparkles } from 'lucide-react';
+import { FreeFireDiamondIcon, FreeFireFlameBadge } from './components/Icons';
+import { ShieldCheck, Flame, Users, Sparkles, Zap } from 'lucide-react';
 
-const STORAGE_CPA_KEY = 'monopoly_cpa_config';
+const STORAGE_CPA_KEY = 'freefire_cpa_config';
+const DEFAULT_CPA_URL =
+  'https://app.trcefy.com/sl?id=6a2050db46d3cf0d62f32aa4&pid=2&sub2=u783751&sub6=s2smartLink&sub5=s1SUBID1HERE';
 
 export default function App() {
-  const [currentLang, setCurrentLang] = useState<Language>('en');
-  const [username, setUsername] = useState('');
-  const [platform, setPlatform] = useState<Platform>('android');
-  const [encryption, setEncryption] = useState(true);
-
-  // Multi-screen view state: 1 = Enter Username, 2 = Choose Package, 3 = Generation, 4 = CPA Locker
-  const [activeStep, setActiveStep] = useState<1 | 2>(1);
-  const [selectedPackage, setSelectedPackage] = useState<RewardPackage | null>(packages[1]); // Default to popular
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [showLocker, setShowLocker] = useState(false);
+  const [currentLang, setCurrentLang] = useState<Language>('ar');
   const [showConfigModal, setShowConfigModal] = useState(false);
 
   // CPA link configuration
-  const DEFAULT_CPA_URL = 'https://app.trcefy.com/click?pid=2&offer_id=23755&sub2=u783751&sub5=s1SUBID1HERE';
-
   const [cpaConfig, setCpaConfig] = useState<CpaConfig>(() => {
     const saved = localStorage.getItem(STORAGE_CPA_KEY);
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (parsed && parsed.lockerUrl && !parsed.lockerUrl.includes('example.com') && !parsed.lockerUrl.includes('id=6a2050db46d3cf0d62f32aa4')) {
+        if (
+          parsed &&
+          parsed.lockerUrl &&
+          !parsed.lockerUrl.includes('example.com')
+        ) {
           return parsed;
         }
       } catch (e) {
-        // ignore fallback
+        // fallback
       }
     }
     return {
       lockerUrl: DEFAULT_CPA_URL,
-      networkName: 'Offer 23755',
+      networkName: 'Trcefy Smartlink',
       autoRedirect: true,
     };
   });
 
   const t = translations[currentLang];
+  const isRtl = currentLang === 'ar';
 
   const handleSaveCpaConfig = (newConfig: CpaConfig) => {
     setCpaConfig(newConfig);
     localStorage.setItem(STORAGE_CPA_KEY, JSON.stringify(newConfig));
   };
 
-  const handleProceedToPackages = () => {
-    setActiveStep(2);
-    // Smooth scroll to top of workspace
-    window.scrollTo({ top: 120, behavior: 'smooth' });
-  };
-
-  const handleBackToUserForm = () => {
-    setActiveStep(1);
-    window.scrollTo({ top: 120, behavior: 'smooth' });
-  };
-
-  const handleClaimPackage = (pkg: RewardPackage) => {
-    setSelectedPackage(pkg);
-    // If username is empty, prompt user to input first
-    if (!username.trim()) {
-      setActiveStep(1);
-      return;
-    }
-    // Launch generator console (Step 3)
-    setIsGenerating(true);
-  };
-
-  const handleFinishGeneration = () => {
-    setIsGenerating(false);
-    setShowLocker(true);
-  };
-
   return (
     <div
-      dir="ltr"
+      dir={isRtl ? 'rtl' : 'ltr'}
       className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-amber-400 selection:text-slate-950"
     >
-      {/* Top Navbar */}
+      {/* Top Navigation */}
       <Navbar
         currentLang={currentLang}
         onLanguageChange={setCurrentLang}
         onOpenCpaSettings={() => setShowConfigModal(true)}
       />
 
-      {/* Hero Section */}
+      {/* Hero Header Section */}
       <section className="relative pt-8 pb-6 sm:pt-12 sm:pb-8 overflow-hidden">
-        {/* Background ambient lighting */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-red-600/15 via-amber-500/15 to-emerald-500/10 blur-3xl pointer-events-none rounded-full" />
+        {/* Glowing Fire & Cyan Ambient Lights */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[350px] bg-gradient-to-tr from-red-600/20 via-amber-500/15 to-cyan-500/15 blur-3xl pointer-events-none rounded-full" />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-          {/* Top trust tag */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 border border-amber-500/30 text-amber-400 text-xs font-semibold mb-4 shadow-sm">
-            <Flame className="w-3.5 h-3.5 text-red-500" />
-            <span>{currentLang === 'fr' ? 'OFFRE LIMITÉE - DISTRIBUTION QUOTIDIENNE' : 'LIMITED TIME DAILY ROLL DROP'}</span>
-            <span className="text-slate-500">·</span>
-            <span className="text-slate-300">2026 Season</span>
+          {/* Top Gaming Badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-amber-500/40 text-amber-400 text-xs font-bold mb-4 shadow-md">
+            <Flame className="w-4 h-4 text-red-500 animate-pulse" />
+            <span>{t.badgeLimited}</span>
+            <span className="text-slate-600">·</span>
+            <span className="text-cyan-300 font-mono">GARENA FF EVENT</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white font-heading leading-tight sm:leading-tight">
-            {currentLang === 'fr' ? (
+            {currentLang === 'ar' ? (
               <>
-                Obtenez des <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-yellow-400">Dés Gratuits Monopoly GO</span> sur votre compte
+                شحن <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">جواهر فري فاير مجاناً</span> (Free Fire 2026)
+              </>
+            ) : currentLang === 'fr' ? (
+              <>
+                Générateur de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">Diamants Free Fire Gratuits</span>
               </>
             ) : (
               <>
-                Claim Free <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-yellow-400">Monopoly GO Dice Rolls</span> Today
+                Claim Free <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500">Free Fire Diamonds</span> Today
               </>
             )}
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto mt-3 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto mt-3.5 leading-relaxed font-medium">
             {t.heroSubtitle}
           </p>
 
-          {/* Stat metrics */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 mt-5 text-xs text-slate-400">
-            <div className="flex items-center gap-2">
+          {/* Trust Metrics Pill Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-7 mt-6 text-xs text-slate-300 font-semibold">
+            <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
-              <span>{currentLang === 'fr' ? '100% Sécurisé & Anti-Ban' : '100% Safe & Anti-Ban'}</span>
+              <span>{t.safeAntiBan}</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>{currentLang === 'fr' ? '+850 000 dés distribués' : '+850,000 Rolls Distributed'}</span>
+              <span>{t.distributedTotal}</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 bg-slate-900/80 border border-slate-800/80 px-3 py-1.5 rounded-xl">
               <Users className="w-4 h-4 text-cyan-400" />
-              <span>{currentLang === 'fr' ? 'Sans mot de passe requis' : 'No Password Required'}</span>
+              <span>{t.noPasswordNeeded}</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Compact Interactive Progress Header */}
-      <CompactSteps
-        currentLang={currentLang}
-        currentStep={2}
-      />
-
-      {/* Main Streamlined Claim Experience */}
+      {/* Main Free Fire 2-Screen Flow */}
       <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 w-full">
-        <DirectClaimFlow
+        <FreeFireGeneratorFlow
           currentLang={currentLang}
-          username={username}
-          setUsername={setUsername}
-          platform={platform}
-          setPlatform={setPlatform}
-          selectedPackage={selectedPackage || packages[1]}
-          onSelectPackage={setSelectedPackage}
           cpaConfig={cpaConfig}
         />
 
@@ -171,33 +127,10 @@ export default function App() {
         </div>
       </main>
 
-      {/* Live Activity Notifications in the corner ("fjnb katih bhal ich3arat dyal nass li khdat") */}
+      {/* Live Claims Notifications in the corner ("flamdigpage katih ich3art nas li khdaw جواهر") */}
       <LiveToasts currentLang={currentLang} />
 
-      {/* Console Simulation Modal */}
-      {isGenerating && selectedPackage && (
-        <ConsoleModal
-          currentLang={currentLang}
-          username={username}
-          platform={platform}
-          pkg={selectedPackage}
-          onFinish={handleFinishGeneration}
-        />
-      )}
-
-      {/* CPA Offer Locker Modal ("kaytih lih offre cpa") */}
-      {showLocker && selectedPackage && (
-        <CpaLockerModal
-          currentLang={currentLang}
-          username={username}
-          pkg={selectedPackage}
-          cpaConfig={cpaConfig}
-          onOpenSettings={() => setShowConfigModal(true)}
-          onClose={() => setShowLocker(false)}
-        />
-      )}
-
-      {/* CPA Configuration Modal for Admin/Owner ("wahd chwia n3tik linnk bach diro") */}
+      {/* CPA Settings Modal */}
       {showConfigModal && (
         <CpaConfigModal
           currentLang={currentLang}
@@ -211,8 +144,8 @@ export default function App() {
       <footer className="border-t border-slate-900 bg-slate-950 py-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <RedDiceIcon className="w-5 h-5" />
-            <span className="font-bold text-slate-400">Monopoly GO™ Dice Portal</span>
+            <FreeFireDiamondIcon className="w-5 h-5" />
+            <span className="font-bold text-slate-300">Free Fire™ Diamond Rewards Portal</span>
             <span>© 2026. All rights reserved.</span>
           </div>
 
@@ -227,15 +160,15 @@ export default function App() {
             <button
               type="button"
               onClick={() => setShowConfigModal(true)}
-              className="text-slate-700 hover:text-slate-500 text-[10px]"
+              className="text-slate-600 hover:text-slate-400 text-[10px]"
             >
-              Portal Sync v2.4
+              CPA Smartlink Config
             </button>
           </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 mt-4 pt-4 border-t border-slate-900/60 text-[10px] text-slate-600 text-center sm:text-left leading-relaxed">
-          Disclaimer: This web application is a promotional reward portal. Monopoly GO is a registered trademark of Scopely and Hasbro. This site is not officially affiliated with or endorsed by Scopely. All game assets remain the property of their respective owners.
+          Disclaimer: This web application is a promotional rewards portal for Garena Free Fire fans. Free Fire is a registered trademark of Garena International. This portal is not officially affiliated with or endorsed by Garena.
         </div>
       </footer>
     </div>

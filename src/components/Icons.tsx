@@ -1,81 +1,82 @@
 import React from 'react';
 
-export function RedDiceIcon({ className = "w-10 h-10" }: { className?: string }) {
+export function FreeFireDiamondIcon({ className = "w-10 h-10" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="diceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#ef4444" />
-          <stop offset="50%" stopColor="#dc2626" />
-          <stop offset="100%" stopColor="#991b1b" />
+        <linearGradient id="ffDiamondGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="40%" stopColor="#0284c7" />
+          <stop offset="100%" stopColor="#0369a1" />
         </linearGradient>
-        <filter id="shadowFilter" x="-10%" y="-10%" width="120%" height="120%">
-          <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#000000" floodOpacity="0.4" />
+        <linearGradient id="ffDiamondFacetTop" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="#7dd3fc" />
+          <stop offset="50%" stopColor="#bae6fd" />
+          <stop offset="100%" stopColor="#38bdf8" />
+        </linearGradient>
+        <linearGradient id="ffDiamondGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.2" />
+        </linearGradient>
+        <filter id="ffDiamondShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="4" floodColor="#0284c7" floodOpacity="0.6" />
         </filter>
       </defs>
-      {/* 3D Dice Body */}
-      <rect x="6" y="6" width="52" height="52" rx="12" fill="url(#diceGrad)" filter="url(#shadowFilter)" stroke="#fca5a5" strokeWidth="1.5" />
-      {/* Subtle shine on top left */}
-      <path d="M12 12 Q 32 10 52 14" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round" />
-      {/* 5-pip dice pattern */}
-      <circle cx="20" cy="20" r="4.5" fill="#ffffff" />
-      <circle cx="44" cy="20" r="4.5" fill="#ffffff" />
-      <circle cx="32" cy="32" r="5" fill="#fef08a" stroke="#ca8a04" strokeWidth="1" />
-      <circle cx="20" cy="44" r="4.5" fill="#ffffff" />
-      <circle cx="44" cy="44" r="4.5" fill="#ffffff" />
+
+      {/* Main Diamond Shape with Glow */}
+      <g filter="url(#ffDiamondShadow)">
+        {/* Top Facet */}
+        <polygon points="18,16 46,16 56,28 8,28" fill="url(#ffDiamondFacetTop)" stroke="#e0f2fe" strokeWidth="1" />
+        {/* Center Bottom Point */}
+        <polygon points="8,28 56,28 32,54" fill="url(#ffDiamondGrad1)" stroke="#38bdf8" strokeWidth="1" />
+        {/* Interior Facet lines */}
+        <polygon points="26,16 38,16 42,28 22,28" fill="url(#ffDiamondGlow)" />
+        <polygon points="22,28 42,28 32,54" fill="#0284c7" opacity="0.6" />
+        <polygon points="8,28 22,28 32,54" fill="#0369a1" opacity="0.8" />
+        <polygon points="42,28 56,28 32,54" fill="#075985" opacity="0.9" />
+        {/* Highlight Sparkles */}
+        <circle cx="22" cy="22" r="2" fill="#ffffff" />
+        <path d="M46 20 L48 24 L52 25 L48 26 L46 30 L44 26 L40 25 L44 24 Z" fill="#ffffff" />
+      </g>
     </svg>
   );
 }
 
-export function GoldDiceIcon({ className = "w-10 h-10" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="goldDiceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#fde047" />
-          <stop offset="40%" stopColor="#eab308" />
-          <stop offset="100%" stopColor="#854d0e" />
-        </linearGradient>
-      </defs>
-      <rect x="6" y="6" width="52" height="52" rx="12" fill="url(#goldDiceGrad)" stroke="#fef08a" strokeWidth="2" />
-      <circle cx="20" cy="20" r="4.5" fill="#1e293b" />
-      <circle cx="44" cy="20" r="4.5" fill="#1e293b" />
-      <circle cx="32" cy="32" r="5" fill="#dc2626" />
-      <circle cx="20" cy="44" r="4.5" fill="#1e293b" />
-      <circle cx="44" cy="44" r="4.5" fill="#1e293b" />
-    </svg>
-  );
-}
-
-export function MonopolyCashIcon({ className = "w-8 h-8" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 64 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="cashGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#22c55e" />
-          <stop offset="100%" stopColor="#15803d" />
-        </linearGradient>
-      </defs>
-      {/* Bill */}
-      <rect x="2" y="2" width="60" height="36" rx="4" fill="url(#cashGrad)" stroke="#86efac" strokeWidth="1.5" />
-      <circle cx="32" cy="20" r="10" stroke="#bbf7d0" strokeWidth="1.5" fill="#14532d" />
-      <text x="32" y="25" textAnchor="middle" fill="#fef08a" fontSize="14" fontWeight="bold" fontFamily="sans-serif">M</text>
-      <circle cx="10" cy="20" r="3" fill="#86efac" />
-      <circle cx="54" cy="20" r="3" fill="#86efac" />
-    </svg>
-  );
-}
-
-export function MrMonopolyHat({ className = "w-8 h-8" }: { className?: string }) {
+export function FreeFireFlameBadge({ className = "w-8 h-8" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Top Hat */}
-      <ellipse cx="24" cy="38" rx="20" ry="4" fill="#0f172a" />
-      <path d="M12 36 L15 12 L33 12 L36 36 Z" fill="#1e293b" stroke="#334155" strokeWidth="1" />
-      {/* Red Ribbon */}
-      <rect x="14" y="28" width="20" height="6" fill="#ef4444" />
-      {/* Top of hat */}
-      <ellipse cx="24" cy="12" rx="9" ry="3" fill="#334155" />
+      <defs>
+        <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stopColor="#dc2626" />
+          <stop offset="40%" stopColor="#ea580c" />
+          <stop offset="75%" stopColor="#f59e0b" />
+          <stop offset="100%" stopColor="#fef08a" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M24 4C24 4 28 12 28 17C28 18.2 27.6 19.3 27 20.2C30 18 34 20 34 25C34 32.5 28 39 22 41C20.5 41.5 18.5 41.8 17 41C15 40 13 37.5 13 34.5C13 30 17 27 18 23C19 19 18 16 18 16C18 16 15 20 15 25C15 25.5 14 26 13.5 25.5C11.5 23 12 18.5 14.5 15C18 10 24 4 24 4Z"
+        fill="url(#flameGrad)"
+      />
     </svg>
   );
 }
+
+export function BooyahIcon({ className = "w-6 h-6" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"
+        fill="#f59e0b"
+        stroke="#fbbf24"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// Keep aliases for compatibility
+export const RedDiceIcon = FreeFireDiamondIcon;
+export const GoldDiceIcon = FreeFireDiamondIcon;
+export const MonopolyCashIcon = FreeFireDiamondIcon;
